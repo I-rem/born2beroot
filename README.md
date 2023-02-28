@@ -54,11 +54,25 @@ You can use **aa-status** to check if it is running.
 - A password will be requested before attempting to connect to this machine.
 - Finally, connect with a user with the help of the student evaluated.
 - This user must not be root.
-Pay attention to the password chosen, it must follow the rules imposed in the subject.
+- Pay attention to the password chosen, it must follow the rules imposed in the subject.
+
+*If your password does not follow the rules you can change it with the passwd command*
+ 
+ **passwd [options] [LOGIN]:** The passwd command changes passwords for user accounts. A normal user may only change the password for their own account, while the superuser may change the password for any account.
+
+`$sudo passwd` will ask you to authenticate yourself with your current user but ***root***'s password will be the one being changed.
+`$sudo passwd user1` will change user1's password rather than your own or root's.
+`$passwd' will simply change the current user's password 
 
 - Check that the UFW service is started with the help of the evaluator.
+
+`$sudo ufw status` or `$systemctl status ufw`
 - Check that the SSH service is started with the help of the evaluator.
+
+`$systemctl status ssh` or `$ssh` or `$sudo service ssh status`
 - Check that the chosen operating system is Debian or Centos with the help of the reviewer.
+
+`$hostnamectl` or `$cat /etc/os-relase`
 #### What are the advantages and diasadvantages of the password policy we implemented in this project?
 
 #### How do we view the partitions for this virtual machine?
