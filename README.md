@@ -26,7 +26,7 @@ It is a virtual enviroment that works as a computer inside another computer.
 Using software to simulate virtual hardware, we can run various operating systems inside one machine.
 
 #### What is the difference between Rocky/CentOS and Debian?
-Rocky is considered to be a sucessor to CentOS anyways.
+Rocky is considered to be a sucessor to CentOS. Debian has more packages and new versions are relased quite often. It has a friendly desktop GUI. CentOS on the other hand is usually the choice of enterprises due to its stability. It has a longer developmental cycle and it can be quite hard to upgrade from one version to another.
 
 #### Why choose one over another in this exercise?
 I have choosen Debian. Setting up Rocky is quite complex. if you are new to system administration Debian is highly recommended. Or at least that's what the sıbject pdf says. Also I have used Ubuntu (which is based on Debian) before. So it shold be easier and more familiar this way. 
@@ -75,47 +75,86 @@ You can use `$aa-status` to check if it is running.
 `$hostnamectl` or `$cat /etc/os-relase`
 ### User
 The subject requests that a user with the login of the evaluated student is present on the virtual machine. Check that it has been added and that it belongs to the "sudo" and "user42" groups.
-`$id your_login` or `getent group sudo user42`
-Make sure the rules imposed in the subject concerning the password policy have been put in place by following the following steps.
 
+`$id your_login` or `getent group sudo user42`
+
+Make sure the rules imposed in the subject concerning the password policy have been put in place by following the following steps.
 First, create a new user. Assign it a password of your choice, respecting the subject rules. 
 
-`$useradd username`
+`$useradd user_name`
+`$chage -l user_name`
+
 The evaluated student must now explain to you how he was able to set up the rules requested in the subject on their virtual machine. Normally there should be one or two modified files
+
+
 - Ask the student being evaluated to create a group named "evaluating" in front of you and assign it to this user. Finally, check that this user belongs to the "evaluating" group.
+
 - Ask the student evaluated to explain the advantages of this password policy, as well as the advantages and disadvantages of its implementation.
-We are forcing the users to use complicated passwords that will be hard to crack which is an obvious advantage. However when people have to change passwords constantly it becomes hard to remember so they generally choose to write down the passwords or use the same/similar passwords for every account they have both of which create security risks.
-#### What are the advantages and diasadvantages of the password policy we implemented in this project?
-Of course, answering that it is because the subject asks for it does not count.
+
+We are forcing the users to use complicated passwords that will be hard to crack which is an obvious advantage. However when people have to change passwords constantly it becomes hard to remember so they generally choose to write down their passwords somewhere or use the same/similar passwords for every account they have both of which create security risks.
 ### Hostname and partitions
 - Check that the hostname of the machine is correctly formatted as follows: login42 (login of the student evaluated).
+
+`$hostnamectl`
 - Modify this hostname by replacing the login with yours, then restart the machine.
+
+`$hostnamectl hostname new_hostname`
+
+`$sudo reboot`
+
 If on restart, the hostname has not been updated, the evaluation stops here.
 - You can now restore the machine to the original hostname.
+
+`$hostnamectl hostname old_hostname`
 - Ask the student evaluated how to view the partitions for this virtual machine.
+
+`$lsblk`: list block devices
 - Compare the output with the example given in the subject. Please note: if the student evaluated makes the bonuses, it will be necessary to refer to the bonus example.
-This part is an opportunity to discuss the scores! The student being evaluated should give you a brief explanation of how LYM works and what it is all about.
-#### How do we view the partitions for this virtual machine?
- lsblk - list block devices
+
+This part is an opportunity to discuss the scores! The student being evaluated should give you a brief explanation of how LVM works and what it is all about.
+#### What Is LVM? (Logical volume management)
+
 ### SUDO
 - Check that the "sudo" program is properly installed on the virtual machine.
 - The evaluated student should now show assigning your new user to the "sudo" group.
+
+`$usermod -aG sudo user_name` or `$sudo adduser user_name sudo`
+
 - The subject imposes strict rules for sudo. The evaluated student must first explain the value and operation of sudo using examples of their choice.
 In a second step, it must show you the implementation of the rules imposed by the subject.
 - Verify that the "/var/log/sudo/" folder exists and has at least one file. Check the contents
 of the files in this folder, You should see a history of the commands used with sudo. Finally, try to run a command via sudo. See if the file (s) in the 11/var/log/sudo/11 folder have been updated.
 ### UFW
 - Check that the "UFW" program is properly installed on the virtual machine.
+
 - Check that it is working properly.
+
 - The evaluated student being evaluated should explain to you basically what UFW is and the value of using it.
+#### What is UFW (Uncomplicated Firewall)?
+
 - List the active rules in UFW. A rule must exist for port 4242.
+
 - Add a new rule to open port 8080. Check that this one has been added by listing the active rules.
+
+`$ufw allow 8080`
+`$ufw status`
+
 - Finally, delete this new rule with the help of the student evaluated.
+
+`$ufw status numbered`
+
+`$ufw delete rule_number`
 
 ### SSH
 - Check that the SSH service is properly installed on the virtual machine.
+
+
 - Check that it is working properly.
+
+
 - The evaluated student must be able to explain to you basically what SSH is and the value of using it.
+#### What is SSH?
+
 - Verify that the SSH service only uses port 4242.
 - The student evaluated should help you use SSH in order to log in with the newly created user.
 To do this, you can use a key or a simple password. It will depend on the student being evaluated.
@@ -124,6 +163,9 @@ Of course, you have to make sure that you cannot use SSH with the "root" user as
 The student evaluated should explain to you simply :
 
 - The operation of its script by displaying its code.
+
+`$vim /usr/local/bin monitoring.sh`
+
 `#!/bin/bash
 arc=$(uname -a)
 pcpu=$(grep "physical id" /proc/cpuinfo | sort | uniq | wc -l) 
@@ -159,6 +201,11 @@ wall "	#Architecture: $arc
 Cron a command line utility to schedule commands or scripts to happen at specific intervals or a specific time each day. 
 - How the evaluated student set up her script so that it runs every 10 minutes when the server starts up.
 
+`$sudo crontab -e`
 
+Once the correct functioning of the script has been verified, the student evaluated should ensure that this script runs every 30s. You can run whatever you want to make sure the script runs with dynamic values correctly, 
 
-Once the correct functioning of the script has been verified, the student evaluated should ensure that this script runs every 30s. You can run whatever you want to make sure the script runs with dynamic values correctly, and the student evaluated should make the script stop running when the server starts up, but without modifying the script. in himself. To check this point, you will have to restart the server one last time. At startup, it will be necessary to check that the script still exists in the same place, that its rights have remained unchanged, and that it has not been modified.
+and the student evaluated should make the script stop running when the server starts up, but without modifying the script. in himself. To check this point, you will have to restart the server one last time.
+
+`$`
+At startup, it will be necessary to check that the script still exists in the same place, that its rights have remained unchanged, and that it has not been modified.
