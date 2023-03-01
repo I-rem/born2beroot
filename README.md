@@ -29,15 +29,15 @@ Using software to simulate virtual hardware, we can run various operating system
 Rocky is considered to be a sucessor to CentOS anyways.
 
 #### Why choose one over another in this exercise?
-I have choosen Debian. Setting up Rocky is quite complex. if you are new to system administration Debian is highly recommended. Or at least that's what the pdf says.
+I have choosen Debian. Setting up Rocky is quite complex. if you are new to system administration Debian is highly recommended. Or at least that's what the sıbject pdf says. Also I have used Ubuntu (which is based on Debian) before. So it shold be easier and more familiar this way. 
 
 #### What is the difference between aptitude and appt? (For Debian)
-Package manager or package management system: A collection of software tools that automates the process of installing, upgrading, configuring, and removing computer programs for a computer's operating system in a consistent manner.
+**Package manager or package management system:** A collection of software tools that automates the process of installing, upgrading, configuring, and removing computer programs for a computer's operating system in a consistent manner.
 
 **aptitude:** a text-based interface to the Debian GNU/Linux package system.
 It allows the user to view the list of packages and to perform package management tasks such as installing, upgrading, and removing packages. Actions may be performed from a visual interface or from the command-line.
 
-**APT**, on the other hand, lacks UI. This is because of the nature of apt-get as it is a low-level package manager and hence restricted to the command-line interface.
+**APT(Advanced Package Tool)**, on the other hand, lacks UI. This is because of the nature of apt-get as it is a low-level package manager and hence restricted to the command-line interface.
 
 Aptitude is smarter and will automatically remove unused packages or suggest installation of dependent packages
 Apt will only do explicitly what it is told to do in the command line
@@ -47,7 +47,7 @@ APT is lower level which can be used by other higher level package managers
  Linux kernel security module that allows the system administrator to restrict programs' capabilities with per-program profiles
 Linux security system that provides Mandatory Access Control (MAC) security. Allows the system admin to restrict the actions that processes can perform. It is included by default with Debian
 
-You can use **aa-status** to check if it is running.
+You can use `$aa-status` to check if it is running.
 
 ### Simple Setup
 - Ensure that the machine does not have a graphical environment at launch.
@@ -69,13 +69,13 @@ You can use **aa-status** to check if it is running.
 `$sudo ufw status` or `$systemctl status ufw`
 - Check that the SSH service is started with the help of the evaluator.
 
-`$systemctl status ssh` or `$ssh` or `$sudo service ssh status`
+`$systemctl status ssh` or `$ssh` (Will show a helpful cheatsheet is ssh is installed) or `$sudo service ssh status`
 - Check that the chosen operating system is Debian or Centos with the help of the reviewer.
 
 `$hostnamectl` or `$cat /etc/os-relase`
 ### User
 The subject requests that a user with the login of the evaluated student is present on the virtual machine. Check that it has been added and that it belongs to the "sudo" and "user42" groups.
-
+`$id your_login` or `getent group sudo user42`
 Make sure the rules imposed in the subject concerning the password policy have been put in place by following the following steps.
 
 First, create a new user. Assign it a password of your choice, respecting the subject rules. 
@@ -83,7 +83,8 @@ First, create a new user. Assign it a password of your choice, respecting the su
 `$useradd username`
 The evaluated student must now explain to you how he was able to set up the rules requested in the subject on their virtual machine. Normally there should be one or two modified files
 - Ask the student being evaluated to create a group named "evaluating" in front of you and assign it to this user. Finally, check that this user belongs to the "evaluating" group.
-- Ask the student evaluated to explain the advantages of this password policy, as well as the advantages and disadvantages of its implementation. 
+- Ask the student evaluated to explain the advantages of this password policy, as well as the advantages and disadvantages of its implementation.
+We are forcing the users to use complicated passwords that will be hard to crack which is an obvious advantage. However when people have to change passwords constantly it becomes hard to remember so they generally choose to write down the passwords or use the same/similar passwords for every account they have both of which create security risks.
 #### What are the advantages and diasadvantages of the password policy we implemented in this project?
 Of course, answering that it is because the subject asks for it does not count.
 ### Hostname and partitions
