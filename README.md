@@ -201,10 +201,11 @@ wall "	#Architecture: $arc
 Cron a command line utility to schedule commands or scripts to happen at specific intervals or a specific time each day. 
 - How the evaluated student set up her script so that it runs every 10 minutes when the server starts up.
 
-`$sudo crontab -e`
+`$sudo crontab -l`
 
 Once the correct functioning of the script has been verified, the student evaluated should ensure that this script runs every 30s. You can run whatever you want to make sure the script runs with dynamic values correctly, 
 
+`$sudo crontab -e`
 and the student evaluated should make the script stop running when the server starts up, but without modifying the script. in himself. To check this point, you will have to restart the server one last time.
 
 `$`
