@@ -208,5 +208,6 @@ Once the correct functioning of the script has been verified, the student evalua
 `$sudo crontab -e`
 and the student evaluated should make the script stop running when the server starts up, but without modifying the script. in himself. To check this point, you will have to restart the server one last time.
 
-`$`
+`$sudo service cronstop`
+
 At startup, it will be necessary to check that the script still exists in the same place, that its rights have remained unchanged, and that it has not been modified.
