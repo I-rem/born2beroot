@@ -63,7 +63,7 @@ You can use `$aa-status` to check if it is running.
 
 `$sudo passwd user1` will change user1's password rather than your own or root's.
 
-`$passwd' will simply change the current user's password 
+`$passwd` will simply change the current user's password 
 
 Then you can change the maxday/minday/warnday settings of your user account and you root account
 
@@ -114,17 +114,18 @@ We are forcing the users to use complicated passwords that will be hard to crack
 
 - Modify this hostname by replacing the login with yours, then restart the machine.
 
-`$hostnamectl hostname new_hostname`
+`$sudo hostnamectl set-hostname new_hostname`
 
 `$sudo reboot`
 
 If on restart, the hostname has not been updated, the evaluation stops here.
 - You can now restore the machine to the original hostname.
 
-`$hostnamectl hostname old_hostname`
+`$sudo hostnamectl set-hostname old_hostname`
+
 - Ask the student evaluated how to view the partitions for this virtual machine.
 
-`$lsblk`: list block devices
+`$lsblk` list block devices
 - Compare the output with the example given in the subject. Please note: if the student evaluated makes the bonuses, it will be necessary to refer to the bonus example.
 
 This part is an opportunity to discuss the scores! The student being evaluated should give you a brief explanation of how LVM works and what it is all about.
@@ -135,18 +136,17 @@ This part is an opportunity to discuss the scores! The student being evaluated s
 
 - The evaluated student should now show assigning your new user to the "sudo" group.
 
-`$
 `$usermod -aG sudo user_name` or `$sudo adduser user_name sudo`
-
 - The subject imposes strict rules for sudo. The evaluated student must first explain the value and operation of sudo using examples of their choice.
 In a second step, it must show you the implementation of the rules imposed by the subject.
 - Verify that the "/var/log/sudo/" folder exists and has at least one file. Check the contents
-of the files in this folder, You should see a history of the commands used with sudo. Finally, try to run a command via sudo. See if the file (s) in the 11/var/log/sudo/11 folder have been updated.
+of the files in this folder, You should see a history of the commands used with sudo. Finally, try to run a command via sudo.
 ### UFW
 - Check that the "UFW" program is properly installed on the virtual machine.
 
 - Check that it is working properly.
 
+`sudo ufw status`
 - The evaluated student being evaluated should explain to you basically what UFW is and the value of using it.
 #### What is UFW (Uncomplicated Firewall)?
 
