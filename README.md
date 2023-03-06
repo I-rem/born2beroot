@@ -1,4 +1,4 @@
-# born2beroot evaluation
+# born2beroot evaluation (mandatory part)
 ## General Instructions
 - During the defense, as soon as you need help to verify a point, the student evaluated must help you.
 
@@ -6,10 +6,9 @@
 
 - Check that the signature contained in "signature.txt" is identical
 to that of the ".vdi" file of the virtual machine to be evaluated. A simple ask the student being evaluated where their ".vdi" file is located.
-- As a precaution, you can duplicate the initial virtual machine in order to keep a copy. (Copying seems to change the signature for me I need to figure this out)
+- As a precaution, you can duplicate the initial virtual machine in order to keep a copy.
 - Start the virtual machine to be evaluated.
-- If something doesn't work as expected or the two signatures differ,
-the evaluation stops here.
+- If something doesn't work as expected or the two signatures different, the evaluation stops here. (This happened at my first defence :'D )
 ## Mandatory Part
 ### Project Overview
 - The student evaluated should simply explain to you:
@@ -61,41 +60,58 @@ You can use `$aa-status` to check if it is running.
  **passwd [options] [LOGIN]:** The passwd command changes passwords for user accounts. A normal user may only change the password for their own account, while the superuser may change the password for any account.
 
 `$sudo passwd` will ask you to authenticate yourself with your current user but ***root***'s password will be the one being changed.
+
 `$sudo passwd user1` will change user1's password rather than your own or root's.
+
 `$passwd' will simply change the current user's password 
+
+Then you can change the maxday/minday/warnday settings of your user account and you root account
+
+`sudo chage --maxdays 30 your_username`
+`sudo chage --mindays 2 your_username`
+`sudo chage --warndays 7 your_username`
 
 - Check that the UFW service is started with the help of the evaluator.
 
 `$sudo ufw status` or `$systemctl status ufw`
+
 - Check that the SSH service is started with the help of the evaluator.
 
 `$systemctl status ssh` or `$ssh` (Will show a helpful cheatsheet is ssh is installed) or `$sudo service ssh status`
+
 - Check that the chosen operating system is Debian or Centos with the help of the reviewer.
 
 `$hostnamectl` or `$cat /etc/os-relase`
 ### User
 The subject requests that a user with the login of the evaluated student is present on the virtual machine. Check that it has been added and that it belongs to the "sudo" and "user42" groups.
 
-`$id your_login` or `getent group sudo user42`
+`$id your_login` or `getent group sudo user42` or `$groups`
 
 Make sure the rules imposed in the subject concerning the password policy have been put in place by following the following steps.
-First, create a new user. Assign it a password of your choice, respecting the subject rules. 
+- First, create a new user. Assign it a password of your choice, respecting the subject rules. 
 
-`$useradd user_name`
-`$chage -l user_name`
+`$useradd user_name` to add the user
 
-The evaluated student must now explain to you how he was able to set up the rules requested in the subject on their virtual machine. Normally there should be one or two modified files
+`$chage -l user_name` to check if certain password rules are imposed to the user
 
+- The evaluated student must now explain to you how he was able to set up the rules requested in the subject on their virtual machine. Normally there should be one or two modified files
+
+`$cat /etc/pam.d/common-password`
+`$cat /etc/login.def`
+
+if you forget where these files are located you can check the man page for `login`and `passwd`
 
 - Ask the student being evaluated to create a group named "evaluating" in front of you and assign it to this user. Finally, check that this user belongs to the "evaluating" group.
 
 - Ask the student evaluated to explain the advantages of this password policy, as well as the advantages and disadvantages of its implementation.
 
 We are forcing the users to use complicated passwords that will be hard to crack which is an obvious advantage. However when people have to change passwords constantly it becomes hard to remember so they generally choose to write down their passwords somewhere or use the same/similar passwords for every account they have both of which create security risks.
+
 ### Hostname and partitions
 - Check that the hostname of the machine is correctly formatted as follows: login42 (login of the student evaluated).
 
 `$hostnamectl`
+
 - Modify this hostname by replacing the login with yours, then restart the machine.
 
 `$hostnamectl hostname new_hostname`
@@ -116,8 +132,10 @@ This part is an opportunity to discuss the scores! The student being evaluated s
 
 ### SUDO
 - Check that the "sudo" program is properly installed on the virtual machine.
+
 - The evaluated student should now show assigning your new user to the "sudo" group.
 
+`$
 `$usermod -aG sudo user_name` or `$sudo adduser user_name sudo`
 
 - The subject imposes strict rules for sudo. The evaluated student must first explain the value and operation of sudo using examples of their choice.
@@ -156,6 +174,7 @@ of the files in this folder, You should see a history of the commands used with 
 #### What is SSH?
 
 - Verify that the SSH service only uses port 4242.
+
 - The student evaluated should help you use SSH in order to log in with the newly created user.
 To do this, you can use a key or a simple password. It will depend on the student being evaluated.
 Of course, you have to make sure that you cannot use SSH with the "root" user as stated in the subject.
@@ -197,7 +216,32 @@ wall "	#Architecture: $arc
 	#Network: IP $ip ($mac)
 	#Sudo: $cmds cmd"
 `
-- #### What is Cron?
+
+Uses the `uname` command to retrieve **system architecture information** and stores it in the `$arc` variable.
+
+Uses the `grep`, `sort`, `uniq`, and `wc` commands to **count the number of physical CPUs** on the system and stores it in the `$pcpu` variable.
+
+Uses the `grep` and `wc` commands to **count the number of virtual CPUs** on the system and stores it in the `$vcpu` variable.
+
+Uses the `free` command to retrieve the **total amount of memory ($fram)** and the ,amount of **used memory ($uram)**. It also calculates the **percentage of memory usage ($pram)** and stores it in the variable.
+Uses the `df` command to retrieve **disk usage information**, such as the **total disk space ($fdisk)**, **used disk space ($udisk)**, and the **percentage of disk usage ($pdisk)**.
+
+Uses the `top` command to retrieve **CPU load information** and stores it in the `$cpul` variable.
+
+Uses the `who` command to retrieve the system's **last boot time** and stores it in the `$lb` variable.
+
+Uses the `lsblk` command to check **if the system is using LVM (Logical Volume Manager)** and stores it in the `$lvmu` variable.
+
+Uses the `ss` command to **count the number of established TCP connections** and stores it in the `$ctcp` variable.
+
+Uses the `users` command to **count the number of logged-in users** and stores it in the `$ulog` variable.
+
+Uses the `hostname` and `ip` commands to retrieve the **system's IP address ($ip)** and the `ip` command to retrieve the **MAC address ($mac)**.
+
+Uses the `journalctl` command to **count the number of sudo commands executed** and stores it in the `$cmds` variable.
+Finally, the wall command is used to display all of the information gathered above on the console.
+
+#### What is Cron?
 Cron a command line utility to schedule commands or scripts to happen at specific intervals or a specific time each day. 
 - How the evaluated student set up her script so that it runs every 10 minutes when the server starts up.
 
@@ -206,8 +250,11 @@ Cron a command line utility to schedule commands or scripts to happen at specifi
 Once the correct functioning of the script has been verified, the student evaluated should ensure that this script runs every 30s. You can run whatever you want to make sure the script runs with dynamic values correctly, 
 
 `$sudo crontab -e`
+
 and the student evaluated should make the script stop running when the server starts up, but without modifying the script. in himself. To check this point, you will have to restart the server one last time.
 
-`$sudo service cronstop`
+`$sudo systemctl disable cron` The script will not stop immediately. We need to reboot first.
+
+`$sudo reboot`
 
 At startup, it will be necessary to check that the script still exists in the same place, that its rights have remained unchanged, and that it has not been modified.
