@@ -165,19 +165,32 @@ of the files in this folder, You should see a history of the commands used with 
 
 ### SSH
 - Check that the SSH service is properly installed on the virtual machine.
-
-
 - Check that it is working properly.
+- Verify that the SSH service only uses port 4242.
 
+`$sudo service ssh status`
+
+We can also show the modifications we made to the ssh configuration files at this point
+
+`$vim /etc/ssh/ssh_config`
+`$vim /etc/ssh/sshd_config`
 
 - The evaluated student must be able to explain to you basically what SSH is and the value of using it.
 #### What is SSH?
+SSH or Secure Shell is an authentication mechanism between a client and a host. It uses encryption techniques so that all communication between clients and hosts is done in encrypted form
 
-- Verify that the SSH service only uses port 4242.
+Its most notable applications are remote login and command-line execution.
+
+It is a network protocol that gives users, particularly system administrators, a secure way to access a computer over an unsecured network.
 
 - The student evaluated should help you use SSH in order to log in with the newly created user.
 To do this, you can use a key or a simple password. It will depend on the student being evaluated.
 Of course, you have to make sure that you cannot use SSH with the "root" user as stated in the subject.
+
+`$ssh your_username@127.0.0.1 -p 4242`
+
+`$ssh root@127.0.0.1 -p 4242`
+
 ### Script monitoring
 The student evaluated should explain to you simply :
 
