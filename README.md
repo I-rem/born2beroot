@@ -68,7 +68,9 @@ You can use `$aa-status` to check if it is running.
 Then you can change the maxday/minday/warnday settings of your user account and you root account
 
 `sudo chage --maxdays 30 your_username`
+
 `sudo chage --mindays 2 your_username`
+
 `sudo chage --warndays 7 your_username`
 
 - Check that the UFW service is started with the help of the evaluator.
@@ -82,6 +84,7 @@ Then you can change the maxday/minday/warnday settings of your user account and 
 - Check that the chosen operating system is Debian or Centos with the help of the reviewer.
 
 `$hostnamectl` or `$cat /etc/os-relase`
+
 ### User
 The subject requests that a user with the login of the evaluated student is present on the virtual machine. Check that it has been added and that it belongs to the "sudo" and "user42" groups.
 
